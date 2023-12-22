@@ -1,0 +1,24 @@
+{
+  "tasksRunnerOptions": {},
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "packages"
+  },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "defaultProject": "PWA",
+  "namedInputs": {},
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "inputs": []
+    },
+    "dev": {
+      "dependsOn": ["^dev"],
+      "outputs": [],
+      "inputs": []
+    }
+  }
+}

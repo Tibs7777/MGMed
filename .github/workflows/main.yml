@@ -29,8 +29,8 @@ jobs:
         cache: 'pnpm'
     - name: Install dependencies
       run: pnpm install
-    - name: Run a build script
-      run: nx run-many --target=build --all=true
+    - name: Build
+      run: pnpm run build
     - name: Zip Artifacts
       run: |
         mkdir -p artifacts

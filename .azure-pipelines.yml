@@ -1,0 +1,46 @@
+pr:
+  - main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  pnpm_config_cache: $(Pipeline.Workspace)/.pnpm-store
+  buildOutputPath: "dist/"
+
+steps:
+  - task: Cache@2
+    inputs:
+      key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
+      path: $(pnpm_config_cache)
+    displayName: Cache pnpm
+
+  - script: |
+      corepack enable
+      corepack prepare pnpm@latest-8 --activate
+      pnpm config set store-dir $(pnpm_config_cache)
+    displayName: "Setup pnpm"
+
+  - script: |
+      pnpm install
+    displayName: "pnpm install"
+
+  - script: |
+      nx run-many --target=build --all=true
+    displayName: "Build"
+
+  - script: |
+      mkdir -p artifacts
+      for dir in $(find $(buildOutputPath) -mindepth 1 -maxdepth 1 -type d)
+      do
+        appName=$(basename $dir)
+        zip -r "artifacts/${appName}.zip" "$dir"
+      done
+    displayName: "Zip Artifacts for Each App"
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'artifacts'
+      ArtifactName: 'zippedArtifacts'
+      publishLocation: 'Container'
+    displayName: "Publish Zipped Artifacts"

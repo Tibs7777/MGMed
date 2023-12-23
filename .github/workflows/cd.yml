@@ -1,0 +1,27 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: zippedArtifacts
+
+      - name: Deploy to Vercel
+        id: deploy
+        run: |
+          npm install -g vercel
+          vercel deploy --token ${{ secrets.VERCEL_TOKEN }} --prod

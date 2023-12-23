@@ -6,7 +6,8 @@
   "scripts": {
     "start": "",
     "dev": "vite",
-    "build": "tsc && vite build"
+    "build": "vite build",
+    "preview": "cross-env NODE_ENV=production vite preview"
   },
   "keywords": [],
   "author": "",

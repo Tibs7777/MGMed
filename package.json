@@ -9,7 +9,8 @@
   "author": "Tom Bartlett",
   "license": "ISC",
   "devDependencies": {
-    "nx": "^17.2.5",
+    "nx": "17.2.5",
+    "pnpm": "8.12.1",
     "tsc": "2.0.4",
     "typescript": "5.3.3"
   }

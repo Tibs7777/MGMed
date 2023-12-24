@@ -5,7 +5,7 @@ env:
 on:
   push:
     branches:
-      - [master]
+      - master
   workflow_dispatch:
 
 jobs:
@@ -29,5 +29,5 @@ jobs:
           echo "::set-output name=url::$DEPLOY_URL"
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    - name: Output Deployment URL
-      run: echo "Deployed to ${{ steps.deploy.outputs.url }}"
+      - name: Output Deployment URL
+        run: echo "Deployed to ${{ steps.deploy.outputs.url }}"
